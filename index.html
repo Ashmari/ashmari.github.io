@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ashmari Pramodya</title>
+<meta name="description" content="Ashmari Pramodya, PhD student at NAIST working on large language models, machine translation and low-resource languages.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FFFFFF;
+    --ink: #000000;
+    --muted: #5A5A5A;
+    --line: #E4E4E4;
+    --soft: #F5F5F5;
+    --sans: "IBM Plex Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+    box-sizing: border-box;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    color-scheme: light;
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(4.5rem + env(safe-area-inset-top, 0px)); }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 1rem; line-height: 1.65; }
+  img { max-width: 100%; display: block; }
+  a { color: var(--ink); text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  /* Top navigation bar */
+  .topbar {
+    position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.96);
+    border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px);
+    backdrop-filter: blur(6px);
+  }
+  .topbar-inner { max-width: 900px; margin: 0 auto; padding: .9rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .brand { font-weight: 700; font-size: 1.1rem; text-decoration: none; }
+  .menu { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; list-style: none; margin: 0; padding: 0; font-size: .92rem; }
+  .menu a { text-decoration: none; color: var(--muted); }
+  .menu a:hover { color: var(--ink); text-decoration: underline; }
+
+  .page { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem 3rem; }
+  section { margin-bottom: 4rem; }
+  h2 { font-size: 1.6rem; font-weight: 700; margin: 0 0 1.5rem; padding-bottom: .5rem; border-bottom: 2px solid var(--ink); }
+
+  /* About */
+  .about { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 2.5rem; align-items: start; }
+  .photo { width: 220px; height: 220px; border-radius: 50%; overflow: hidden; background: var(--soft); display: grid; place-items: center; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .photo span { font-size: 3.5rem; font-weight: 700; }
+  .about h1 { font-size: 2.4rem; line-height: 1.1; margin: 0 0 .25rem; letter-spacing: -0.02em; }
+  .tagline { color: var(--muted); margin: 0 0 1.25rem; }
+  .about p { margin: 0 0 1rem; max-width: 40em; }
+  .buttons { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem; }
+  .btn { display: inline-block; padding: .45rem 1rem; border: 1.5px solid var(--ink); border-radius: 999px; font-size: .88rem; font-weight: 500; text-decoration: none; }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn.small { padding: .2rem .75rem; font-size: .8rem; }
+
+  /* News */
+  .news { list-style: none; margin: 0; padding: 0; }
+  .news li { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 1rem; padding: .6rem 0; border-bottom: 1px solid var(--line); }
+  .news time { font-weight: 600; font-size: .9rem; padding-top: .05rem; }
+
+  /* Publications */
+  .pub { padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+  .pub h3 { font-size: 1.1rem; margin: 0 0 .3rem; line-height: 1.4; }
+  .pub .authors { color: var(--muted); font-size: .92rem; margin: 0; }
+  .pub .authors b { color: var(--ink); }
+  .pub .venue { font-style: italic; font-size: .92rem; margin: .1rem 0 .6rem; }
+  .tag { font-style: normal; font-size: .75rem; background: var(--ink); color: var(--paper); padding: .1rem .5rem; border-radius: 4px; margin-left: .4rem; }
+
+  /* Projects */
+  .filters { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .filters button { font: inherit; font-size: .88rem; padding: .35rem .95rem; border-radius: 999px; border: 1.5px solid var(--ink); background: var(--paper); color: var(--ink); cursor: pointer; }
+  .filters button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+  .card { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+  .card[hidden] { display: none; }
+  .card .thumb { aspect-ratio: 16 / 9; background: var(--soft); display: grid; place-items: center; color: var(--muted); font-size: .85rem; }
+  .card .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .card .body { padding: 1rem 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .5rem; flex: 1; }
+  .card h3 { font-size: 1.02rem; margin: 0; line-height: 1.4; }
+  .card p { margin: 0; font-size: .92rem; color: var(--muted); flex: 1; }
+  .card .when { font-size: .8rem; color: var(--muted); }
+
+  /* Experience */
+  .exp h3 { font-size: 1.15rem; margin: 2rem 0 .75rem; }
+  .exp h3:first-child { margin-top: 0; }
+  .item { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: 1rem; padding: .6rem 0; border-bottom: 1px solid var(--line); }
+  .item .when { font-size: .88rem; color: var(--muted); padding-top: .05rem; }
+  .item b { display: block; }
+  .item span.sub { color: var(--muted); font-size: .92rem; }
+
+  footer { border-top: 1px solid var(--line); text-align: center; font-size: .85rem; color: var(--muted); padding: 1.5rem; }
+
+  @media (max-width: 680px) {
+    .topbar-inner { padding: .7rem 1rem; }
+    .menu { gap: .15rem .9rem; font-size: .85rem; }
+    .page { padding-top: 2rem; }
+    .about { grid-template-columns: 1fr; gap: 1.5rem; }
+    .photo { width: 150px; height: 150px; }
+    .about h1 { font-size: 2rem; }
+    .news li, .item { grid-template-columns: 1fr; gap: .1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#about">Ashmari Pramodya</a>
+    <ul class="menu">
+      <li><a href="#about">About</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="cv.pdf">CV</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about" class="about">
+    <!-- Upload your photo as images/profile.jpg -->
+    <div class="photo">
+      <img src="images/profile.jpg" alt="Ashmari Pramodya" onerror="this.remove(); document.getElementById('initials').hidden = false;">
+      <span id="initials" hidden>AP</span>
+    </div>
+    <div>
+      <h1>Ashmari Pramodya</h1>
+      <p class="tagline">PhD student, Nara Institute of Science and Technology (NAIST), Japan</p>
+      <p>I am a PhD student at the Nara Institute of Science and Technology (NAIST), Japan, supported by the Japanese Government MEXT Scholarship. My research focuses on large language models for low-resource languages, especially Sinhala and Tamil: how well these models understand them, and how we can use them for better machine translation.</p>
+      <p>During my master's at NAIST, I built SinhalaMMLU, the first benchmark for evaluating multitask language understanding in Sinhala (EMNLP 2025), and studied how movie information helps LLMs translate subtitles (ACL 2025 SRW). Before coming to Japan, I was a research assistant and assistant lecturer at the University of Colombo School of Computing (UCSC), Sri Lanka.</p>
+      <p>I'm passionate about multilingual NLP, LLM evaluation, and building language technology that works for everyone, not only speakers of high-resource languages.</p>
+      <div class="buttons">
+        <a class="btn" href="cv.pdf">CV</a>
+        <a class="btn" href="mailto:pussewala.ashmari.ow4@naist.ac.jp">Email</a>
+        <!-- Replace YOUR-ID with your Google Scholar ID, or delete this line -->
+        <a class="btn" href="https://scholar.google.com/citations?user=YOUR-ID">Google Scholar</a>
+        <a class="btn" href="https://www.linkedin.com/in/ashmari-pramodya/">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NEWS ================= -->
+  <section id="news">
+    <h2>News</h2>
+    <ul class="news">
+      <li><time>Nov. 2025</time><span>🎤 Presented SinhalaMMLU at EMNLP 2025 in Suzhou, China</span></li>
+      <li><time>Nov. 2025</time><span>📝 Served as a reviewer for ICTer 2025</span></li>
+      <li><time>Oct. 2025</time><span>👩🏻‍🎓 Started my PhD (Doctor of Engineering) at NAIST, Japan</span></li>
+      <li><time>Oct. 2025</time><span>👩‍🏫 Started as a Teaching Assistant for the Natural Language Processing course at NAIST</span></li>
+      <li><time>Sep. 2025</time><span>🎓 Completed my Master of Engineering at NAIST</span></li>
+      <li><time>Jul. 2025</time><span>✈️ Presented our paper at the ACL 2025 Student Research Workshop in Vienna, Austria</span></li>
+      <li><time>Nov. 2023</time><span>🏆 Our banking chatbot won a Merit Award at the National ICT Awards (NBQSA)</span></li>
+      <li><time>Oct. 2023</time><span>🌸 Started my master's at NAIST as a MEXT Scholar</span></li>
+      <li><time>Sep. 2023</time><span>✈️ Presented at the RANLP 2023 Student Research Workshop in Varna, Bulgaria</span></li>
+    </ul>
+  </section>
+
+  <!-- ================= RESEARCH / PUBLICATIONS ================= -->
+  <section id="research">
+    <h2>Research</h2>
+    <!-- To add a link, replace the # in href="#" with the real link.
+         To remove a button you don't need, delete that <a ...> line. -->
+
+    <div class="pub">
+      <h3>Benchmarking Large Language Models for Multitask Language Understanding and Reading Comprehension in Sinhala</h3>
+      <p class="authors"><b>Ashmari Pramodya</b>, Nirasha Nelki, Heshan Shalinda, Chamila Liyanage, Yusuke Sakai, Randil Pushpananda, Ruvan Weerasinghe, Hidetaka Kamigaito, Taro Watanabe</p>
+      <p class="venue">ACM TALLIP, 2026 <span class="tag">Under review</span></p>
+    </div>
+
+    <div class="pub">
+      <h3>SinhalaMMLU: A Comprehensive Benchmark for Evaluating Multitask Language Understanding in Sinhala</h3>
+      <p class="authors"><b>Ashmari Pramodya</b>, Nirasha Nelki, Heshan Shalinda, Chamila Liyanage, Yusuke Sakai, Randil Pushpananda, Ruvan Weerasinghe, Hidetaka Kamigaito, Taro Watanabe</p>
+      <p class="venue">EMNLP 2025</p>
+      <a class="btn small" href="#">Paper</a> <a class="btn small" href="#">Dataset</a>
+    </div>
+
+    <div class="pub">
+      <h3>Translating Movie Subtitles by Large Language Models using Movie-meta Information</h3>
+      <p class="authors"><b>Ashmari Pramodya</b>, Yusuke Sakai, Justin Vasselli, Hidetaka Kamigaito, Taro Watanabe</p>
+      <p class="venue">ACL 2025 Student Research Workshop</p>
+      <a class="btn small" href="#">Paper</a>
+    </div>
+
+    <div class="pub">
+      <h3>WorldCuisines: A Massive-Scale Benchmark for Multilingual and Multicultural Visual Question Answering on Global Cuisines</h3>
+      <p class="authors">Genta Indra Winata, Frederikus Hudi, Patrick Amadeus Irawan, David Anugraha, Rifki Afina Putri, Wang Yutong, Adam Nohejl, Ubaidillah Ariq Prathama, Nedjma Ousidhoum, Afifa Amriani, Anar Rzayev, Anirban Das, <b>Ashmari Pramodya</b>, and others</p>
+      <p class="venue">NAACL 2025</p>
+      <a class="btn small" href="#">Paper</a>
+    </div>
+
+    <div class="pub">
+      <h3>TamSiPara: A Tamil–Sinhala Parallel Corpus</h3>
+      <p class="authors">Randil Pushpananda, Chamila Liyanage, <b>Ashmari Pramodya</b>, Ruvan Weerasinghe</p>
+      <p class="venue">TSD 2024</p>
+      <a class="btn small" href="#">Paper</a>
+    </div>
+
+    <div class="pub">
+      <h3>Enhancing Neural Machine Translation for the Sinhala-Tamil Language Pair with Limited Resources</h3>
+      <p class="authors"><b>Ashmari Pramodya</b>, K. T. Y. Mahima, Randil Pushpananda, Ruvan Weerasinghe</p>
+      <p class="venue">ICTer Journal, 2024</p>
+      <a class="btn small" href="#">Paper</a>
+    </div>
+
+    <div class="pub">
+      <h3>Exploring Low-resource Neural Machine Translation for Sinhala-Tamil Language Pair</h3>
+      <p class="authors"><b>Ashmari Pramodya</b></p>
+      <p class="venue">RANLP 2023 Student Research Workshop</p>
+      <a class="btn small" href="#">Paper</a>
+    </div>
+
+    <div class="pub">
+      <h3>A Comparison of Transformer, Recurrent Neural Networks and SMT in Tamil to Sinhala MT</h3>
+      <p class="authors"><b>Ashmari Pramodya</b>, Randil Pushpananda, Ruvan Weerasinghe</p>
+      <p class="venue">ICTer 2020 (IEEE)</p>
+      <a class="btn small" href="#">Paper</a>
+    </div>
+  </section>
+
+  <!-- ================= PROJECTS ================= -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="filters" role="group" aria-label="Filter projects">
+      <button type="button" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-filter="research" aria-pressed="false">Research</button>
+      <button type="button" data-filter="applied" aria-pressed="false">Applied</button>
+    </div>
+
+    <!-- For each project image: upload a picture to the images folder with the same file name. -->
+    <div class="grid">
+      <article class="card" data-cat="research">
+        <div class="thumb"><img src="images/sinhalammlu.jpg" alt="" onerror="this.remove()"></div>
+        <div class="body">
+          <span class="when">2023–2025, NAIST</span>
+          <h3>SinhalaMMLU</h3>
+          <p>The first benchmark for testing LLMs in Sinhala: 7,000+ exam questions across 30 subjects, used to evaluate 26 LLMs.</p>
+          <div><a class="btn small" href="#">Paper</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="research">
+        <div class="thumb"><img src="images/subtitles.jpg" alt="" onerror="this.remove()"></div>
+        <div class="body">
+          <span class="when">2023–2025, NAIST</span>
+          <h3>Movie subtitle translation with LLMs</h3>
+          <p>Studying how movie titles, genres, summaries and earlier dialogue help LLMs translate subtitles into German, Spanish, French and Finnish.</p>
+          <div><a class="btn small" href="#">Paper</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="applied">
+        <div class="thumb"><img src="images/translator.jpg" alt="" onerror="this.remove()"></div>
+        <div class="body">
+          <span class="when">2021, UCSC</span>
+          <h3>Tamil to Sinhala translator</h3>
+          <p>A neural translation system trained on 165k sentence pairs (20.44 BLEU), deployed as a public web app. Bronze award at NBQSA 2022.</p>
+          <div><a class="btn small" href="https://mt.subasa.lk">Live demo</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="applied">
+        <div class="thumb"><img src="images/chatbot.jpg" alt="" onerror="this.remove()"></div>
+        <div class="body">
+          <span class="when">2021–2022, UCSC</span>
+          <h3>Banking chatbot</h3>
+          <p>A RASA-based conversational AI for a local bank, handling 3,000+ daily questions across 5+ products. Merit award at NBQSA 2023.</p>
+        </div>
+      </article>
+
+      <article class="card" data-cat="research">
+        <div class="thumb"><img src="images/embeddings.jpg" alt="" onerror="this.remove()"></div>
+        <div class="body">
+          <span class="when">2021, UCSC</span>
+          <h3>Sinhala word embeddings</h3>
+          <p>FastText embeddings trained on a 10M-word Sinhala corpus, capturing word meaning better than the existing pre-trained model.</p>
+        </div>
+      </article>
+
+      <article class="card" data-cat="research">
+        <div class="thumb"><img src="images/fluency.jpg" alt="" onerror="this.remove()"></div>
+        <div class="body">
+          <span class="when">2022, IIIT Hyderabad</span>
+          <h3>Text fluency for Indian languages</h3>
+          <p>Summer school project on measuring text fluency, commended as the best project at IASNLP 2022.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= EXPERIENCE ================= -->
+  <section id="experience" class="exp">
+    <h2>Experience</h2>
+
+    <h3>Research and teaching</h3>
+    <div class="item"><span class="when">Oct. 2025 – Mar. 2026</span><div><b>Teaching Assistant, Natural Language Processing</b><span class="sub">NAIST, Japan</span></div></div>
+    <div class="item"><span class="when">Nov. 2022 – Aug. 2023</span><div><b>Assistant Lecturer</b><span class="sub">Department of Computation and Intelligent Systems, UCSC, Sri Lanka</span></div></div>
+    <div class="item"><span class="when">Apr. 2021 – Oct. 2022</span><div><b>Research Assistant</b><span class="sub">Language Technology Research Laboratory, UCSC, Sri Lanka</span></div></div>
+    <div class="item"><span class="when">Aug. 2019 – Feb. 2020</span><div><b>Research Intern</b><span class="sub">Language Technology Research Laboratory, UCSC, Sri Lanka</span></div></div>
+
+    <h3>Education</h3>
+    <div class="item"><span class="when">2025 – 2028</span><div><b>Doctor of Engineering</b><span class="sub">Nara Institute of Science and Technology, Japan</span></div></div>
+    <div class="item"><span class="when">2023 – 2025</span><div><b>Master of Engineering</b><span class="sub">Nara Institute of Science and Technology, Japan</span></div></div>
+    <div class="item"><span class="when">2017 – 2021</span><div><b>BSc (Hons) in Computer Science</b><span class="sub">University of Colombo School of Computing, Sri Lanka</span></div></div>
+
+    <h3>Awards</h3>
+    <div class="item"><span class="when">2023 – 2028</span><div><b>Japanese Government MEXT Scholarship</b></div></div>
+    <div class="item"><span class="when">2023</span><div><b>Merit Award, National ICT Awards (NBQSA)</b><span class="sub">Banking Bot</span></div></div>
+    <div class="item"><span class="when">2022</span><div><b>Bronze Award, National ICT Awards (NBQSA)</b><span class="sub">Tamil to Sinhala Translator</span></div></div>
+  </section>
+
+</div>
+
+<footer>© 2026 Ashmari Pramodya</footer>
+
+<script>
+  document.querySelectorAll('.filters button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var f = btn.dataset.filter;
+      document.querySelectorAll('.filters button').forEach(function (b) { b.setAttribute('aria-pressed', b === btn); });
+      document.querySelectorAll('.card').forEach(function (c) { c.hidden = !(f === 'all' || c.dataset.cat === f); });
+    });
+  });
+</script>
+</body>
+</html>
